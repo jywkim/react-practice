@@ -71,7 +71,7 @@ import './index.css';
     }
   }
   
-  class Game extends React.Component {
+  export default class Game extends React.Component {
     render() {
       return (
         <div className="game">
@@ -89,10 +89,10 @@ import './index.css';
   
   // ========================================
   
-  ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
-  );
+  // ReactDOM.render(
+  //   <Game />,
+  //   document.getElementById('root')
+  // );
 
   function calculateWinner(squares) {
     const lines = [

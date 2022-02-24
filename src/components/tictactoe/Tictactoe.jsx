@@ -1,8 +1,9 @@
 import React from "react";
+import Game from './index';
 
-function Contact() {
+function Tictactoe() {
   return (
-    <div className="contact">
+    <div className="tictactoe">
       <div class="container">
         <div class="row align-items-center my-5">
           <div class="col-lg-7">
@@ -13,9 +14,9 @@ function Contact() {
             />
           </div>
           <div class="col-lg-5">
-            <h1 class="font-weight-light">Contact</h1>
+            <h1 class="font-weight-light">Tic-Tac-Toe</h1>
             <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis unde maxime dolore consectetur nisi facilis, aliquam modi ducimus amet aspernatur praesentium itaque quae officia rerum autem consequatur quibusdam odio ullam?
+              < Game />
             </p>
           </div>
         </div>
@@ -24,4 +25,4 @@ function Contact() {
   );
 }
 
-export default Contact;
+export default Tictactoe;
