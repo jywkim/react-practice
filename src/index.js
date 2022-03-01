@@ -9,6 +9,7 @@ import {
   Home,
   Login,
   Tictactoe,
+  Excelexport,
   Blog,
   Posts,
   Post,
@@ -21,6 +22,7 @@ ReactDOM.render(
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/tictactoe" element={<Tictactoe />} />
+      <Route path="/excelexport" element={<Excelexport />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />

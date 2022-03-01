@@ -1,0 +1,21 @@
+.header {
+    margin: 4% 2%;
+    text-align: center;
+  }
+  
+  .bgvi {
+    background-color: #4267B2;;
+    color: aliceblue;
+  }
+  
+  .even {
+    background-color: #D3D3D3;
+  }
+  
+  .right {
+    text-align: right;
+  }
+  
+  .center {
+    text-align: center;
+  }
