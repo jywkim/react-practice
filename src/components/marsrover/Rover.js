@@ -1,5 +1,6 @@
 export default class Rover {
-    constructor (initialPosition) {
-        this.position = initialPosition
+    constructor (direction, position) {
+        this.direction = direction;
+        this.position = position;
     }
 }
