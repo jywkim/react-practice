@@ -62,7 +62,7 @@ export default class Rover {
                 break;
             default:
         }
-        this.logMovement();
+        this.checkObstacle('forward');
     }
     
     moveBackwards() {
@@ -81,11 +81,23 @@ export default class Rover {
                 break;
             default:
         }
-        this.logMovement();
+        this.checkObstacle('backwards');
     }
 
-    logMovement() {
-        this.log.push('Rover moved Forward, Rovers position is: ' + this.position);
+    checkObstacle(movement) {
+        var obstacleCheck = 'Rover moved ' + movement + ', Rovers position is: ' + this.position;
+        if (this.position[0] < 0 || this.position[0] >= 10) {
+            this.position[0] = 0;
+            obstacleCheck = 'Obstacle detected (Top/Bottom), you cannot move ' + movement + '. Rovers position set to: ' + this.position;
+        } else if (this.position[1] < 0 || this.position[1] >= 10) {
+            this.position[1] = 0;
+            obstacleCheck = 'Obstacle detected (Left/Right), you cannot move ' + movement + '. Rovers position set to: ' + this.position;
+        }
+        this.logMovement(obstacleCheck);
+    }
+
+    logMovement(obstacleCheck) {
+        this.log.push(obstacleCheck);
     }
     
     logTurn(turn) {
