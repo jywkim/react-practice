@@ -1,7 +1,11 @@
 export default class Rover {
-    constructor (direction, position) {
+    constructor (matrix, direction, position) {
         this.direction = direction;
         this.position = position;
+        this.boundaryLeft = matrix.boundaryLeft;
+        this.boundaryRight = matrix.boundaryRight;
+        this.boundaryTop = matrix.boundaryTop;
+        this.boundaryBottom = matrix.boundaryBottom;
         this.log = [];
         let startPos = 'Starting Position: ' + this.position.join();
         let startDir = 'Starting Direction: '  + this.direction;
@@ -24,7 +28,7 @@ export default class Rover {
                 break;
             default:
         }
-        this.logTurn('L');
+        this.logMove('L', false);
     }
     
     turnRight() {
@@ -43,80 +47,84 @@ export default class Rover {
                 break;
             default:
         }
-        this.logTurn('R');
+        this.logMove('R', false);
     }
     
     moveForward() {
         switch (this.direction) {
             case 'N':
-                this.position[0] -= 1;
-                break;
-            case 'E':
                 this.position[1] += 1;
                 break;
-            case 'S':
+            case 'E':
                 this.position[0] += 1;
                 break;
-            case 'W':
+            case 'S':
                 this.position[1] -= 1;
+                break;
+            case 'W':
+                this.position[0] -= 1;
                 break;
             default:
         }
-        this.checkObstacle('forward');
+        this.checkObstacle('F');
     }
     
     moveBackwards() {
         switch (this.direction) {
             case 'N':
-                this.position[0] += 1;
-                break;
-            case 'E':
                 this.position[1] -= 1;
                 break;
-            case 'S':
+            case 'E':
                 this.position[0] -= 1;
                 break;
-            case 'W':
+            case 'S':
                 this.position[1] += 1;
+                break;
+            case 'W':
+                this.position[0] += 1;
                 break;
             default:
         }
-        this.checkObstacle('backwards');
+        this.checkObstacle('B');
     }
 
-    checkObstacle(movement) {
-        var obstacleCheck = 'Rover moved ' + movement + ', Rovers position is: ' + this.position;
-        if (this.position[0] < 0 || this.position[0] >= 10) {
-            this.position[0] = 0;
-            obstacleCheck = 'Obstacle detected (Top/Bottom), you cannot move ' + movement + '. Rovers position set to: ' + this.position;
-        } else if (this.position[1] < 0 || this.position[1] >= 10) {
-            this.position[1] = 0;
-            obstacleCheck = 'Obstacle detected (Left/Right), you cannot move ' + movement + '. Rovers position set to: ' + this.position;
+    checkObstacle(command) {
+        var obstacle = true;
+        if (this.position[0] < this.boundaryLeft) {
+            this.position[0] = this.boundaryLeft;
+        } else if (this.position[0] > this.boundaryRight) {
+            this.position[0] = this.boundaryRight;
+        } else if (this.position[1] < this.boundaryBottom) {
+            this.position[1] = this.boundaryBottom;
+        } else if (this.position[1] > this.boundaryTop) {
+            this.position[1] = this.boundaryTop;
+        } else {
+            obstacle = false;
         }
-        this.logMovement(obstacleCheck);
+        this.logMove(command, obstacle);
     }
 
-    logMovement(obstacleCheck) {
-        this.log.push(obstacleCheck);
-    }
-    
-    logTurn(turn) {
-        this.log.push('Rover turned ' + turn + ', now Rovers direction is: ' + this.direction);
+    logMove(command, obstacle) {
+        var obstacleMsg = obstacle ? 'Obstacle! ' : '';
+        var output = 'Input: ' + command + ' | ' + obstacleMsg + '\
+        Rover is at ' + this.position + ' \
+        and it is facing ' + this.direction;
+        this.log.push(output);   
     }
 
     commands(command) {
         for (var i = 0; i < command.length; i++) {
             switch (command[i]) {
-                case 'b':
+                case 'B':
                     this.moveBackwards();
                     break;
-                case 'f':
+                case 'F':
                     this.moveForward();
                     break;
-                case 'r':
+                case 'R':
                     this.turnRight();
                     break;
-                case 'l':
+                case 'L':
                     this.turnLeft();
                     break;
                 default:
