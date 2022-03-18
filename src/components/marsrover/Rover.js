@@ -106,10 +106,11 @@ export default class Rover {
 
     logMove(command, obstacle) {
         var obstacleMsg = obstacle ? 'Obstacle! ' : '';
-        var output = 'Input: ' + command + ' | ' + obstacleMsg + '\
-        Rover is at ' + this.position + ' \
-        and it is facing ' + this.direction;
-        this.log.push(output);   
+        var invalidCommandMsg = 'Invalid command! Please enter F, B, L, or R.';
+        var validCommandMsg = 'Rover is at ' + this.position + ' and it is facing ' + this.direction;
+        var logMsg = ['F', 'B', 'L', 'R'].includes(command) ? validCommandMsg : invalidCommandMsg;
+        var output = 'Input: ' + command + ' | ' + obstacleMsg + logMsg;
+        this.log.push(output);
     }
 
     commands(command) {
@@ -128,6 +129,7 @@ export default class Rover {
                     this.turnLeft();
                     break;
                 default:
+                    this.logMove(command[i], false);
             }
         }
     }

@@ -6,7 +6,7 @@ import Rover from "./Rover";
 export default function App() {
   let grid = new Matrix(10, 10);
   let rover = new Rover(grid, 'N', [0, 0]);
-  let commands = 'BFFFFRF';
+  let commands = 'ZBFFFFRF';
   rover.commands(commands);
 
   return (
