@@ -8,7 +8,8 @@ import {
   Footer,
   Home,
   Login,
-  Tictactoe,
+  Tictactoe1P,
+  Tictactoe2P,
   Excelexport,
   Counter,
   Restaurant,
@@ -24,7 +25,8 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/tictactoe" element={<Tictactoe />} />
+      <Route path="/tictactoe1P" element={<Tictactoe1P />} />
+      <Route path="/tictactoe2P" element={<Tictactoe2P />} />
       <Route path="/excelexport" element={<Excelexport />} />
       <Route path="/counter" element={<Counter />} />
       <Route path="/restaurant" element={<Restaurant />} />

@@ -23,8 +23,13 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/tictactoe">
-                  Tic-Tac-Toe
+                <NavLink className="nav-link" to="/tictactoe1P">
+                  Tic-Tac-Toe 1P (NEW)
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/tictactoe2P">
+                  Tic-Tac-Toe 2P
                 </NavLink>
               </li>
               <li className="nav-item">
