@@ -12,80 +12,42 @@ export default class Rover {
         this.log.push(startDir, startPos);
     }
 
-    turnLeft() {
+    turn(isLeft) {
         switch (this.direction) {
             case 'N':
-                this.direction = 'W';
+                this.direction = isLeft ? 'W' : 'E';
                 break;
             case 'W':
-                this.direction = 'S';
+                this.direction = isLeft ? 'S' : 'N';
                 break;
             case 'S':
-                this.direction = 'E';
+                this.direction = isLeft ? 'E' : 'W';
                 break;
             case 'E':
-                this.direction = 'N';
+                this.direction = isLeft ? 'N' : 'S';
                 break;
             default:
         }
-        this.logMove('L', false);
+        this.logMove(isLeft ? 'L' : 'R', false);
     }
     
-    turnRight() {
+    move(isForward) {
         switch (this.direction) {
             case 'N':
-                this.direction = 'E';
+                isForward ? this.position[1] += 1 : this.position[1] -= 1;
                 break;
             case 'E':
-                this.direction = 'S';
+                isForward ? this.position[0] += 1 : this.position[0] -= 1;
                 break;
             case 'S':
-                this.direction = 'W';
+                isForward ? this.position[1] -= 1 : this.position[1] += 1;
                 break;
             case 'W':
-                this.direction = 'N';
+                isForward ? this.position[0] -= 1 : this.position[0] += 1;
                 break;
             default:
         }
-        this.logMove('R', false);
-    }
-    
-    moveForward() {
-        switch (this.direction) {
-            case 'N':
-                this.position[1] += 1;
-                break;
-            case 'E':
-                this.position[0] += 1;
-                break;
-            case 'S':
-                this.position[1] -= 1;
-                break;
-            case 'W':
-                this.position[0] -= 1;
-                break;
-            default:
-        }
-        this.checkObstacle('F');
-    }
-    
-    moveBackwards() {
-        switch (this.direction) {
-            case 'N':
-                this.position[1] -= 1;
-                break;
-            case 'E':
-                this.position[0] -= 1;
-                break;
-            case 'S':
-                this.position[1] += 1;
-                break;
-            case 'W':
-                this.position[0] += 1;
-                break;
-            default:
-        }
-        this.checkObstacle('B');
+        this.checkObstacle(isForward ? 'F' : 'B');
     }
 
     checkObstacle(command) {
@@ -116,17 +78,17 @@ export default class Rover {
     commands(command) {
         for (var i = 0; i < command.length; i++) {
             switch (command[i]) {
-                case 'B':
-                    this.moveBackwards();
-                    break;
                 case 'F':
-                    this.moveForward();
+                    this.move(true);
                     break;
-                case 'R':
-                    this.turnRight();
+                case 'B':
+                    this.move(false);
                     break;
                 case 'L':
-                    this.turnLeft();
+                    this.turn(true);
+                    break;
+                case 'R':
+                    this.turn(false);
                     break;
                 default:
                     this.logMove(command[i], false);
