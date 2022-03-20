@@ -24,7 +24,7 @@ function Navigation() {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/tictactoe1P">
-                  Tic-Tac-Toe 1P (NEW)
+                  Tic-Tac-Toe 1P
                 </NavLink>
               </li>
               <li className="nav-item">
