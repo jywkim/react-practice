@@ -8,6 +8,7 @@ export { default as Excelexport } from "./excelexport/Excelexport";
 export { default as Counter } from "./counter/Counter";
 export { default as Restaurant } from "./restaurant/Restaurant";
 export { default as Marsrover } from "./marsrover/Marsrover";
+export { default as NBA } from "./nba/NBA";
 export { default as Blog } from "./blog/Blog";
 export { default as Posts } from "./blog/Posts";
 export { default as Post } from "./blog/Post";
