@@ -96,9 +96,11 @@ export default class Game extends React.Component {
 
       let status;
       if (winner) {
-        status = 'Winner: ' + winner;
+        status = "Winner: " + winner;
+      } else if (isBoardFilled(current.squares)) {
+        status = "It's a Tie!";
       } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        status = "Next player: " + (this.state.xIsNext ? "X" : "O");
       }
 
       return (
@@ -136,5 +138,14 @@ export default class Game extends React.Component {
       }
     }
     return null;
+  }
+
+  function isBoardFilled(squares) {
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i] === null) {
+        return false;
+      }
+    }
+    return true;
   }
   
