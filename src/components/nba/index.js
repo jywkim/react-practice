@@ -6,7 +6,6 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // players: [],
       playerName : null,
       playerStats: {}
     }
@@ -14,24 +13,26 @@ export default class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.getPlayerId();
-    console.log(this.state.playerName);
+    if (e.target[0].value.length !== 0) {
+      this.getPlayerId();
+    } else {
+      alert("Please type player's name");
+    }
   }
 
   handleChange = (event) => {
     const replace = event.target.value.split(" ").join("_");
     if(replace.length > 0) {
       this.setState({playerName: replace});
-    } else {
-      alert("Please type player's name!");
     }
   }
 
   getPlayerId = () => {
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerName}`)
     .then(async res => {
+      console.log(res.data.data);
       if (res.data.data[0] === undefined) {
-        alert("This player is either injured or hasn't played yet");
+        alert("This player does not exist");
       } else if (res.data.data.length > 1) {
         alert("Please specify the name more");
       } else {
@@ -45,33 +46,15 @@ export default class App extends Component {
   getPlayerStats = (playerId) => {
     axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2021&player_ids[]=${playerId}`)
     .then(async res => {
-      console.log(res.data.data);
-      this.setState({ playerStats: res.data.data[0] });
+      if (res.data.data[0] === undefined) {
+        alert("This player is either injured or hasn't played yet this season");
+      } else {
+        this.setState({ playerStats: res.data.data[0] });
+      }
     }).catch(err => {
       console.log(err);
     })
   }
-
-  // componentDidMount() {
-  //   this.getPlayerId();
-  //   this.getPlayerStats();
-  // }
-
-  // async componentDidMount() {
-  //   const url = "https://www.balldontlie.io/api/v1/players";
-  //   // const url = "https://www.balldontlie.io/api/v1/players?search=durant";
-  //   let result = null;
-  //   try {
-  //     result = await axios(url, {
-  //       headers: {
-  //         Accept: "application/json"
-  //       }
-  //     })
-  //   } catch(e) {
-  //     console.log(e);
-  //   }
-  //   this.setState({players: result.data.data});
-  // }
 
   render(){
     return (
