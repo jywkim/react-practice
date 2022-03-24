@@ -30,7 +30,6 @@ export default class App extends Component {
   getPlayerId = () => {
     axios.get(`https://www.balldontlie.io/api/v1/players?search=${this.state.playerName}`)
     .then(async res => {
-      console.log(res.data.data);
       if (res.data.data[0] === undefined) {
         alert("This player does not exist");
       } else if (res.data.data.length > 1) {
@@ -56,26 +55,37 @@ export default class App extends Component {
     })
   }
 
+  cancelSearch = () => { 
+    document.getElementById("formPlayer").reset();
+    this.setState({ playerStats: {} });
+  }
+
   render(){
     return (
       <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-              placeholder="Please enter player's name"
-            >
-            </input>
-          </label>
-          <input type="submit" value="Submit"></input>
-        </form>
+        <form 
+          id="formPlayer"
+          onSubmit={this.handleSubmit}>
+          <input
+            id="inputPlayer"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+            placeholder="Please enter player's name"
+          >
+          </input>
+          <input type="submit" name="submit" value="Submit"></input>
+          <input type="button" name="cancel" value="Cancel" onClick={this.cancelSearch}></input>
+        </form><br></br>
         GP: {this.state.playerStats["games_played"]}<br></br>
         PPG: {this.state.playerStats["pts"]}<br></br>
         RPG: {this.state.playerStats["reb"]}<br></br>
-        APG: {this.state.playerStats["ast"]}
+        SPG: {this.state.playerStats["stl"]}<br></br>
+        BPG: {this.state.playerStats["blk"]}<br></br>
+        FG%: {this.state.playerStats["fg_pct"] }<br></br>
+        3P%: {this.state.playerStats["fg3_pct"]}<br></br>
+        TPG: {this.state.playerStats["turnover"]}
+
       </div>
     );
   }

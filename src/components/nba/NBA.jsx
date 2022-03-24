@@ -5,8 +5,8 @@ function NBA() {
   return (
     <div className="marsrover">
       <div className="container">
-        <div className="row align-items-center my-5">
-          <div className="col-lg-5">
+        <div className="row align-items-center my-6">
+          <div className="col-lg-6">
             <h1 className="font-weight-light">NBA</h1>
             < App />
           </div>
