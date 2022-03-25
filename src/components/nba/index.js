@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import axios from 'axios';
 
 export default function App() {
   const [submit, setSubmit] = useState(false);
   const [value, setValue] = useState({ playerName: "", playerStats: {} });
+  const [players, setPlayers] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  
+  useEffect(() => {
+    const loadPlayers = async () => {
+      const response = await axios.get("https://www.balldontlie.io/api/v1/players?search=kyle");
+      console.log(response.data.data)
+      setPlayers(response.data.data);
+    }
+    loadPlayers();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +28,24 @@ export default function App() {
   }
 
  const handleChange = (e) => {
-    setValue({playerName: e.target.value});
+    let text = e.target.value;
+    setValue({playerName: text});
+
+    let matches = [];
+    if (text.length > 0) {
+      matches = players.filter(player => {
+        const regex = new RegExp(`${text}`, "gi");
+        return player.first_name.match(regex) || player.last_name.match(regex);
+      });
+    }
+    console.log(matches);
+    setSuggestions(matches);
+    setValue({playerName: text});
+  }
+
+  const onSuggestHandler = (text) => {
+    setValue({playerName: text});
+    setSuggestions([]);
   }
 
   const getPlayerId = () => {
@@ -56,21 +84,31 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <div className="container">
       <form 
         id="formPlayer"
         onSubmit={handleSubmit}>
         <input
-          id="inputPlayer"
+          className="col-md-8 input"
           name="playerName"
           type="text"
           value={value.playerName}
           onChange={handleChange}
           placeholder="Please enter player's name"
+          onBlur={()=> {
+            setTimeout(() => {
+              setSuggestions([]);
+            }, 100);
+          }}
         >
         </input>
         <button name="submit" value="Submit">Submit</button>
         <button name="cancel" value="Cancel" onClick={cancelSearch}>Cancel</button>
+        {suggestions && suggestions.map((suggestion, i) => 
+          <div key={i} className="suggestion col-md-8 justify-content-md-center"
+            onClick={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
+          >{suggestion.first_name} {suggestion.last_name}</div>
+        )}
       </form><br></br>
       {submit && value.playerStats && (
         <div>
