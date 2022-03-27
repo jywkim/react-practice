@@ -4,13 +4,14 @@ import axios from 'axios';
 
 export default function App() {
   const [submit, setSubmit] = useState(false);
-  const [value, setValue] = useState({ playerName: "", playerStats: {} });
+  const [cancel, setCancel] = useState(false);
+  const [value, setValue] = useState({ playerName: "", playerInfo: {}, playerStats: {} });
   const [players, setPlayers] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   
   useEffect(() => {
     const loadPlayers = async () => {
-      const response = await axios.get("https://www.balldontlie.io/api/v1/players?search=kyle");
+      const response = await axios.get("https://www.balldontlie.io/api/v1/players?page=150");
       console.log(response.data.data)
       setPlayers(response.data.data);
     }
@@ -21,9 +22,11 @@ export default function App() {
     e.preventDefault();
     if (e.target[0].value.length !== 0) {
       setSubmit(true);
+      setCancel(false);
       getPlayerId();
     } else {
-      alert("Please type player's name");
+      if (!cancel)
+        alert("Please type player's name");
     }
   }
 
@@ -57,30 +60,33 @@ export default function App() {
       } else if (res.data.data.length > 1) {
         alert("Please specify the name more");
       } else {
-        await getPlayerStats(res.data.data[0].id);
+        setValue({ playerName: value.playerName, playerInfo: res.data.data[0], playerStats: {}});
+        await getPlayerStats(res.data.data[0]);
       }
     }).catch(err => {
       console.log(err);
     })
   }
 
-  const getPlayerStats = (playerId) => {
-    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2021&player_ids[]=${playerId}`)
+  const getPlayerStats = (playerInfo) => {
+    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2021&player_ids[]=${playerInfo.id}`)
     .then(async res => {
       console.log('getPlayerStats', res.data.data);
       if (res.data.data[0] === undefined) {
         alert("This player is either injured or hasn't played yet this season");
       } else {
-        setValue({ playerName: value.playerName, playerStats: res.data.data[0] });
+        setValue({ playerName: value.playerName, playerInfo: playerInfo, playerStats: res.data.data[0] });
       }
     }).catch(err => {
       console.log(err);
     })
   }
 
-  const cancelSearch = () => { 
+  const cancelSearch = () => {
+    setCancel(true);
+    setSubmit(false);
     document.getElementById("formPlayer").reset();
-    setValue({ playerName: "", playerStats: {} });
+    setValue({ playerName: "", playerInfo: {}, playerStats: {} });
   }
 
   return (
@@ -110,7 +116,21 @@ export default function App() {
           >{suggestion.first_name} {suggestion.last_name}</div>
         )}
       </form><br></br>
-      {submit && value.playerStats && (
+      {submit && !cancel && value.playerInfo && (
+        <div>
+          Player: {value.playerName}<br></br>
+          Position: {value.playerInfo["position"]}<br></br>
+          {value.playerInfo["team"] && (
+          <div>
+            Team: {value.playerInfo["team"]["abbreviation"]}<br></br>
+            Conference: {value.playerInfo["team"]["conference"]}<br></br>
+            Division: {value.playerInfo["team"]["division"]}<br></br>
+          </div>
+          )}
+          <br></br>
+        </div>
+      )}
+      {submit && !cancel && value.playerStats && (
         <div>
           GP: {value.playerStats["games_played"]}<br></br>
           PPG: {value.playerStats["pts"]}<br></br>
