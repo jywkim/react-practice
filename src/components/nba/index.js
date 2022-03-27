@@ -8,12 +8,23 @@ export default function App() {
   const [value, setValue] = useState({ playerName: "", playerInfo: {}, playerStats: {} });
   const [players, setPlayers] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
-  
+  const url = "https://www.balldontlie.io/api/v1/players?per_page=100";
+
   useEffect(() => {
     const loadPlayers = async () => {
-      const response = await axios.get("https://www.balldontlie.io/api/v1/players?page=150");
-      console.log(response.data.data)
-      setPlayers(response.data.data);
+      let records = [];
+      let page = 0;
+      let totalPages = 0;
+
+      do {
+          let { data: response }  = await axios.get(url, { params: { page: ++page } });
+          totalPages = response.meta.total_pages;
+          records = records.concat(response.data);
+      } while (page < totalPages);
+
+      console.log(totalPages);
+      console.log(records);
+      setPlayers(records);
     }
     loadPlayers();
   }, []);
