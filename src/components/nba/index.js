@@ -49,7 +49,8 @@ export default function App() {
     if (text.length > 0) {
       matches = players.filter(player => {
         const regex = new RegExp(`${text}`, "gi");
-        return player.first_name.match(regex) || player.last_name.match(regex);
+        let playerFullName = player.first_name + ' ' + player.last_name;
+        return playerFullName.match(regex);
       });
     }
     console.log(matches);
