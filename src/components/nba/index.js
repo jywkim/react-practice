@@ -101,6 +101,14 @@ export default function App() {
     setValue({ playerName: "", playerInfo: {}, playerStats: {} });
   }
 
+  const handleBlur = (e) => {
+    console.log("handle blur");
+    e.preventDefault();
+    setTimeout(() => {
+      setSuggestions([]);
+    }, 100);
+  }
+
   return (
     <div className="container">
       <form 
@@ -113,18 +121,14 @@ export default function App() {
           value={value.playerName}
           onChange={handleChange}
           placeholder="Please enter player's name"
-          onBlur={()=> {
-            setTimeout(() => {
-              setSuggestions([]);
-            }, 100);
-          }}
+          onBlur={handleBlur}
         >
         </input>
         <button name="submit" value="Submit">Submit</button>
         <button name="cancel" value="Cancel" onClick={cancelSearch}>Cancel</button>
         {suggestions && suggestions.map((suggestion, i) => 
           <div key={i} className="suggestion col-md-8 justify-content-md-center"
-            onClick={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
+            onMouseDown={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
           >{suggestion.first_name} {suggestion.last_name}</div>
         )}
       </form><br></br>
