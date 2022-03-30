@@ -9,6 +9,7 @@ export default function App() {
   const [players, setPlayers] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const url = "https://www.balldontlie.io/api/v1/players?per_page=100";
+  const [cursor, setCursor] = useState(0);
 
   useEffect(() => {
     const loadPlayers = async () => {
@@ -42,6 +43,7 @@ export default function App() {
   }
 
  const handleChange = (e) => {
+    setCursor(0);
     let text = e.target.value;
     setValue({playerName: text});
 
@@ -102,11 +104,22 @@ export default function App() {
   }
 
   const handleBlur = (e) => {
-    console.log("handle blur");
     e.preventDefault();
     setTimeout(() => {
       setSuggestions([]);
     }, 100);
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 38 && cursor > 0) {
+      setCursor(cursor - 1);
+    } else if (e.keyCode === 40 && cursor < suggestions.length - 1) {
+      setCursor(cursor + 1);
+    } else if (e.keyCode === 13) {
+      let name = suggestions[cursor].first_name + " " + suggestions[cursor].last_name;
+      setValue({playerName: name});
+      setSuggestions([]);
+    }
   }
 
   return (
@@ -122,13 +135,16 @@ export default function App() {
           onChange={handleChange}
           placeholder="Please enter player's name"
           onBlur={handleBlur}
+          onKeyDown={ handleKeyDown }
         >
         </input>
         <button name="submit" value="Submit">Submit</button>
         <button name="cancel" value="Cancel" onClick={cancelSearch}>Cancel</button>
         {suggestions && suggestions.map((suggestion, i) => 
-          <div key={i} className="suggestion col-md-8 justify-content-md-center"
-            onMouseDown={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
+          <div key={i}
+              id={i} 
+              className={"suggestion col-md-8 justify-content-md-center " + (cursor === i ? "highlight" : null)}
+              onMouseDown={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
           >{suggestion.first_name} {suggestion.last_name}</div>
         )}
       </form><br></br>
