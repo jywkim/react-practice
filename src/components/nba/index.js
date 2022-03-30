@@ -153,7 +153,7 @@ export default function App() {
           <table>
             <tbody>
             <tr>
-              <th className="cellHeader"></th>
+              <th className="cellHeader">PLAYER</th>
               <th className="cellHeader">TEAM</th>
               <th className="cellHeader">CONF</th>
               <th className="cellHeader">DIV</th>
@@ -190,15 +190,48 @@ export default function App() {
       )}
       {submit && !cancel && value.playerStats && (
         <div>
-          GP: {value.playerStats["games_played"]}<br></br>
-          PPG: {value.playerStats["pts"]}<br></br>
-          RPG: {value.playerStats["reb"]}<br></br>
-          APG: {value.playerStats["ast"]}<br></br>
-          SPG: {value.playerStats["stl"]}<br></br>
-          BPG: {value.playerStats["blk"]}<br></br>
-          FG%: {value.playerStats["fg_pct"] }<br></br>
-          3P%: {value.playerStats["fg3_pct"]}<br></br>
-          TPG: {value.playerStats["turnover"]}
+          <table>
+            <tbody>
+            <tr>
+              <th className="cellHeader">GP</th>
+              <th className="cellHeader">PPG</th>
+              <th className="cellHeader">RPG</th>
+              <th className="cellHeader">APG</th>
+              <th className="cellHeader">SPG</th>
+              <th className="cellHeader">BPG</th>
+              <th className="cellHeader">FG%</th>
+              <th className="cellHeader">3P%</th>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["games_played"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["pts"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["reb"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["ast"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["stl"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["blk"]}         
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["fg_pct"] }
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerStats["fg3_pct"]}
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       )}
     </div>
