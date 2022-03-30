@@ -150,16 +150,41 @@ export default function App() {
       </form><br></br>
       {submit && !cancel && value.playerInfo && (
         <div>
-          Player: {value.playerName}<br></br>
-          Position: {value.playerInfo["position"]}<br></br>
-          Height: {value.playerInfo["height_feet"] ? (value.playerInfo["height_feet"] + "'" + value.playerInfo["height_inches"] + '"') : "N/A"}<br></br>
-          {value.playerInfo["team"] && (
-          <div>
-            Team: {value.playerInfo["team"]["abbreviation"]}<br></br>
-            Conference: {value.playerInfo["team"]["conference"]}<br></br>
-            Division: {value.playerInfo["team"]["division"]}<br></br>
-          </div>
-          )}
+          <table>
+            <tbody>
+            <tr>
+              <th className="cellHeader"></th>
+              <th className="cellHeader">TEAM</th>
+              <th className="cellHeader">CONF</th>
+              <th className="cellHeader">DIV</th>
+              <th className="cellHeader">POS</th>
+              <th className="cellHeader">HT</th>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+              <td className="cellSingle cellLong">
+                {value.playerName}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerInfo["team"]["abbreviation"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerInfo["team"]["conference"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerInfo["team"]["division"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerInfo["position"]}
+              </td>
+              <td className="cellSingle cellSmall">
+                {value.playerInfo["height_feet"] ? (value.playerInfo["height_feet"] + "'" + value.playerInfo["height_inches"] + '"') : "N/A"}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
           <br></br>
         </div>
       )}
