@@ -152,6 +152,7 @@ export default function App() {
         <div>
           Player: {value.playerName}<br></br>
           Position: {value.playerInfo["position"]}<br></br>
+          Height: {value.playerInfo["height_feet"] ? (value.playerInfo["height_feet"] + "'" + value.playerInfo["height_inches"] + '"') : "N/A"}<br></br>
           {value.playerInfo["team"] && (
           <div>
             Team: {value.playerInfo["team"]["abbreviation"]}<br></br>
