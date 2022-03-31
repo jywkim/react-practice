@@ -14,7 +14,8 @@ import {
   Counter,
   Restaurant,
   Marsrover,
-  NBA,
+  NBA1,
+  NBA2,
   Blog,
   Posts,
   Post,
@@ -32,7 +33,8 @@ ReactDOM.render(
       <Route path="/counter" element={<Counter />} />
       <Route path="/restaurant" element={<Restaurant />} />
       <Route path="/marsrover" element={<Marsrover />} />
-      <Route path="/nba" element={<NBA />} />
+      <Route path="/nba1" element={<NBA1 />} />
+      <Route path="/nba2" element={<NBA2 />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />
