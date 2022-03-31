@@ -34,8 +34,6 @@ export default function App() {
     if (e.target[0].value.length !== 0) {
       setSubmit(true);
       getPlayerId();
-    } else {
-      alert("Please type player's name");
     }
   }
 
@@ -106,9 +104,11 @@ export default function App() {
     } else if (e.keyCode === 40 && cursor < suggestions.length - 1) {
       setCursor(cursor + 1);
     } else if (e.keyCode === 13) {
-      let name = suggestions[cursor].first_name + " " + suggestions[cursor].last_name;
-      setValue({playerName: name});
-      setSuggestions([]);
+      let name = suggestions[cursor] ? (suggestions[cursor].first_name + " " + suggestions[cursor].last_name) : "";
+      if (name.length) {
+        setValue({playerName: name });
+        setSuggestions([]);
+      }
     }
   }
 
