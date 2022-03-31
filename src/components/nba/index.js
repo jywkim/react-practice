@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export default function App() {
   const [submit, setSubmit] = useState(false);
-  const [cancel, setCancel] = useState(false);
   const [value, setValue] = useState({ playerName: "", playerInfo: {}, playerStats: {} });
   const [players, setPlayers] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
@@ -34,11 +33,9 @@ export default function App() {
     e.preventDefault();
     if (e.target[0].value.length !== 0) {
       setSubmit(true);
-      setCancel(false);
       getPlayerId();
     } else {
-      if (!cancel)
-        alert("Please type player's name");
+      alert("Please type player's name");
     }
   }
 
@@ -96,13 +93,6 @@ export default function App() {
     })
   }
 
-  const cancelSearch = () => {
-    setCancel(true);
-    setSubmit(false);
-    document.getElementById("formPlayer").reset();
-    setValue({ playerName: "", playerInfo: {}, playerStats: {} });
-  }
-
   const handleBlur = (e) => {
     e.preventDefault();
     setTimeout(() => {
@@ -126,9 +116,10 @@ export default function App() {
     <div className="container">
       <form 
         id="formPlayer"
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+        autoComplete="off">
         <input
-          className="col-md-8 input"
+          className="col-md-12 input"
           name="playerName"
           type="text"
           value={value.playerName}
@@ -138,18 +129,20 @@ export default function App() {
           onKeyDown={ handleKeyDown }
         >
         </input>
-        <button name="submit" value="Submit">Submit</button>
-        <button name="cancel" value="Cancel" onClick={cancelSearch}>Cancel</button>
         {suggestions && suggestions.map((suggestion, i) => 
           <div key={i}
               id={i} 
-              className={"suggestion col-md-8 justify-content-md-center " + (cursor === i ? "highlight" : null)}
+              className={"suggestion col-md-12 justify-content-md-center " + (cursor === i ? "highlight" : null)}
               onMouseDown={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
           >{suggestion.first_name} {suggestion.last_name}</div>
         )}
-      </form><br></br>
-      {submit && !cancel && value.playerInfo && (
+      </form>
+      
+      <br></br>
+      
+      {submit && value.playerInfo && value.playerStats && (
         <div>
+
           <table>
             <tbody>
             <tr>
@@ -186,10 +179,7 @@ export default function App() {
           </table>
 
           <br></br>
-        </div>
-      )}
-      {submit && !cancel && value.playerStats && (
-        <div>
+
           <table>
             <tbody>
             <tr>
@@ -232,6 +222,7 @@ export default function App() {
             </tr>
             </tbody>
           </table>
+
         </div>
       )}
     </div>

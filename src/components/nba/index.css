@@ -17,11 +17,11 @@
     background-color: #CDCDCD;
     border: 1px solid #FFFFFF;
     height: 1in;
+    text-align: center;
 }
 
 .cellSmall {
     width: 1in;
-    text-align: center;
 }
 
 .cellLong {
