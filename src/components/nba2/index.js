@@ -7,24 +7,14 @@ export default function App() {
   const [value, setValue] = useState({ playerName: "", playerInfo: {}, playerStats: {} });
   const [players, setPlayers] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
-  const url = "https://www.balldontlie.io/api/v1/players?per_page=100";
+  const url = "https://data.nba.net/data/10s/prod/v1/2021/players.json";
   const [cursor, setCursor] = useState(0);
 
   useEffect(() => {
     const loadPlayers = async () => {
-      let records = [];
-      let page = 0;
-      let totalPages = 0;
-
-      do {
-          let { data: response }  = await axios.get(url, { params: { page: ++page } });
-          totalPages = response.meta.total_pages;
-          records = records.concat(response.data);
-      } while (page < totalPages);
-
-      console.log(totalPages);
-      console.log(records);
-      setPlayers(records);
+      const response = await axios.get(url);
+      console.log(response.data.league.standard);
+      setPlayers(response.data.league.standard);
     }
     loadPlayers();
   }, []);
@@ -46,7 +36,7 @@ export default function App() {
     if (text.length > 0) {
       matches = players.filter(player => {
         const regex = new RegExp(`${text}`, "gi");
-        let playerFullName = player.first_name + ' ' + player.last_name;
+        let playerFullName = player.firstName + ' ' + player.lastName;
         return playerFullName.match(regex);
       });
     }
@@ -104,7 +94,7 @@ export default function App() {
     } else if (e.keyCode === 40 && cursor < suggestions.length - 1) {
       setCursor(cursor + 1);
     } else if (e.keyCode === 13) {
-      let name = suggestions[cursor] ? (suggestions[cursor].first_name + " " + suggestions[cursor].last_name) : "";
+      let name = suggestions[cursor] ? (suggestions[cursor].firstName + " " + suggestions[cursor].lastName) : "";
       if (name.length) {
         setValue({playerName: name });
         setSuggestions([]);
@@ -133,8 +123,8 @@ export default function App() {
           <div key={i}
               id={i} 
               className={"suggestion col-md-12 justify-content-md-center " + (cursor === i ? "highlight" : null)}
-              onMouseDown={() => onSuggestHandler(suggestion.first_name + ' ' + suggestion.last_name)}
-          >{suggestion.first_name} {suggestion.last_name}</div>
+              onMouseDown={() => onSuggestHandler(suggestion.firstName + ' ' + suggestion.lastName)}
+          >{suggestion.firstName} {suggestion.lastName}</div>
         )}
       </form>
       
