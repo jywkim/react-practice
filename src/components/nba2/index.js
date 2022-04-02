@@ -3,13 +3,13 @@ import "./index.css";
 import axios from 'axios';
 
 export default function App() {
-  const [submit, setSubmit] = useState(false);
-  const [value, setValue] = useState({ playerName: "", playerInfo: {}, teamInfo: {} });
+  const [cursor, setCursor] = useState(0);
+  const [player, setPlayer] = useState({ name: "", team: "", conf: "", div: "", pos: "", heightFt: "", heightIn: "", age: "", jersey: "" })
   const [players, setPlayers] = useState([]);
+  const [submit, setSubmit] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const urlPlayers = "https://data.nba.net/data/10s/prod/v1/2021/players.json";
   const urlTeams = "https://data.nba.net/data/10s/prod/v1/2021/teams.json";
-  const [cursor, setCursor] = useState(0);
 
   useEffect(() => {
     const loadPlayers = async () => {
@@ -20,43 +20,17 @@ export default function App() {
     loadPlayers();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (e.target[0].value.length !== 0) {
-      setSubmit(true);
-    }
-  }
-
- const handleChange = (e) => {
-    setCursor(0);
-    let text = e.target.value;
-    setValue({playerName: text});
-
-    let matches = [];
-    if (text.length > 0) {
-      matches = players.filter(player => {
-        const regex = new RegExp(`${text}`, "gi");
-        let playerFullName = player.firstName + ' ' + player.lastName;
-        return playerFullName.match(regex);
-      });
-    }
-    setSuggestions(matches);
-    setValue({playerName: text});
-  }
-
-  const onSuggestHandler = (suggestion, i) => {
-    let name = suggestion.firstName + ' ' + suggestion.lastName;
-    setValue({playerName: name, playerInfo: suggestions[i]});
-    getTeamInfo(suggestions[i])
-    setSuggestions([]);
-    setSubmit(true);
-  }
-
-  const getTeamInfo = (player) => {
+  const enterPlayer = (name, suggestions, i) => {
     axios.get(urlTeams)
     .then(async res => {
-      let team = res.data.league.standard.find(x => x.teamId === player.teamId);
-      setValue({ playerName: player.firstName + ' ' + player.lastName, playerInfo: player, teamInfo: team });
+      let team = res.data.league.standard.find(x => x.teamId === suggestions[i].teamId);
+      let pos = suggestions[i].pos;
+      let heightFt = suggestions[i].heightFeet;
+      let heightIn = suggestions[i].heightInches;
+      let age = getAge(suggestions[i].dateOfBirthUTC);
+      let jersey = suggestions[i].jersey;
+      setPlayer({name: name, team: team.tricode, conf: team.confName, div: team.divName, pos: pos, heightFt: heightFt, heightIn: heightIn, age: age, jersey: jersey});
+      setSuggestions([]);
     }).catch(err => {
       console.log(err);
     })
@@ -80,6 +54,21 @@ export default function App() {
     }, 100);
   }
 
+ const handleChange = (e) => {
+    setCursor(0);
+    let text = e.target.value;
+    let matches = [];
+    if (text.length > 0) {
+      matches = players.filter(player => {
+        const regex = new RegExp(`${text}`, "gi");
+        let playerFullName = player.firstName + ' ' + player.lastName;
+        return playerFullName.match(regex);
+      });
+    }
+    setSuggestions(matches);
+    setPlayer({name: text});
+  }
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 38 && cursor > 0) {
       setCursor(cursor - 1);
@@ -88,10 +77,21 @@ export default function App() {
     } else if (e.keyCode === 13) {
       let name = suggestions[cursor] ? (suggestions[cursor].firstName + " " + suggestions[cursor].lastName) : "";
       if (name.length) {
-        setValue({playerName: name, playerInfo: suggestions[cursor]});
-        getTeamInfo(suggestions[cursor])
-        setSuggestions([]);
+        enterPlayer(name, suggestions, cursor);
       }
+    }
+  }
+
+  const handleMouseDown = (suggestion, i) => {
+    let name = suggestion.firstName + ' ' + suggestion.lastName;
+    enterPlayer(name, suggestions, i);
+    setSubmit(true);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (e.target[0].value.length !== 0) {
+      setSubmit(true);
     }
   }
 
@@ -105,7 +105,7 @@ export default function App() {
           className="col-md-12 input"
           name="playerName"
           type="text"
-          value={value.playerName}
+          value={player.name}
           onChange={handleChange}
           placeholder="Please enter player's name"
           onBlur={handleBlur}
@@ -116,14 +116,14 @@ export default function App() {
           <div key={i}
               id={i} 
               className={"suggestion col-md-12 justify-content-md-center " + (cursor === i ? "highlight" : null)}
-              onMouseDown={() => onSuggestHandler(suggestion, i)}
+              onMouseDown={() => handleMouseDown(suggestion, i)}
           >{suggestion.firstName} {suggestion.lastName}</div>
         )}
       </form>
       
       <br></br>
       
-      {submit && value.playerInfo && value.teamInfo && (
+      {submit && player.team && (
         <div>
 
           <table>
@@ -142,28 +142,28 @@ export default function App() {
             <tbody>
             <tr>
               <td className="cellSingle cellLong">
-                {value.playerName}
+                {player.name}
               </td>
               <td className="cellSingle cellSmall">
-                {value.teamInfo["tricode"]}
+                {player.team}
               </td>
               <td className="cellSingle cellSmall">
-                {value.teamInfo["confName"]}
+                {player.conf}
               </td>
               <td className="cellSingle cellSmall">
-                {value.teamInfo["divName"]}
+                {player.div}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["pos"]}
+                {player.pos}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["heightFeet"] ? (value.playerInfo["heightFeet"] + "'" + value.playerInfo["heightInches"] + '"') : "N/A"}
+                {player.heightFt + "'" + player.heightIn + '"'}
               </td>
               <td className="cellSingle cellSmall">
-                {getAge(value.playerInfo["dateOfBirthUTC"])}
+                {player.age}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["jersey"]}
+                {player.jersey}
               </td>
             </tr>
             </tbody>
