@@ -4,15 +4,16 @@ import axios from 'axios';
 
 export default function App() {
   const [submit, setSubmit] = useState(false);
-  const [value, setValue] = useState({ playerName: "", playerInfo: {}, playerStats: {} });
+  const [value, setValue] = useState({ playerName: "", playerInfo: {}, teamInfo: {} });
   const [players, setPlayers] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
-  const url = "https://data.nba.net/data/10s/prod/v1/2021/players.json";
+  const urlPlayers = "https://data.nba.net/data/10s/prod/v1/2021/players.json";
+  const urlTeams = "https://data.nba.net/data/10s/prod/v1/2021/teams.json";
   const [cursor, setCursor] = useState(0);
 
   useEffect(() => {
     const loadPlayers = async () => {
-      const response = await axios.get(url);
+      const response = await axios.get(urlPlayers);
       console.log(response.data.league.standard);
       setPlayers(response.data.league.standard);
     }
@@ -23,7 +24,6 @@ export default function App() {
     e.preventDefault();
     if (e.target[0].value.length !== 0) {
       setSubmit(true);
-      getPlayerId();
     }
   }
 
@@ -40,45 +40,37 @@ export default function App() {
         return playerFullName.match(regex);
       });
     }
-    console.log(matches);
     setSuggestions(matches);
     setValue({playerName: text});
   }
 
-  const onSuggestHandler = (text) => {
-    setValue({playerName: text});
+  const onSuggestHandler = (suggestion, i) => {
+    let name = suggestion.firstName + ' ' + suggestion.lastName;
+    setValue({playerName: name, playerInfo: suggestions[i]});
+    getTeamInfo(suggestions[i])
     setSuggestions([]);
+    setSubmit(true);
   }
 
-  const getPlayerId = () => {
-    axios.get(`https://www.balldontlie.io/api/v1/players?search=${value.playerName}`)
+  const getTeamInfo = (player) => {
+    axios.get(urlTeams)
     .then(async res => {
-      console.log('getPlayerId', res.data.data);
-      if (res.data.data[0] === undefined) {
-        alert("This player does not exist");
-      } else if (res.data.data.length > 1) {
-        alert("Please specify the name more");
-      } else {
-        setValue({ playerName: value.playerName, playerInfo: res.data.data[0], playerStats: {}});
-        await getPlayerStats(res.data.data[0]);
-      }
+      let team = res.data.league.standard.find(x => x.teamId === player.teamId);
+      setValue({ playerName: player.firstName + ' ' + player.lastName, playerInfo: player, teamInfo: team });
     }).catch(err => {
       console.log(err);
     })
   }
 
-  const getPlayerStats = (playerInfo) => {
-    axios.get(`https://www.balldontlie.io/api/v1/season_averages?season=2021&player_ids[]=${playerInfo.id}`)
-    .then(async res => {
-      console.log('getPlayerStats', res.data.data);
-      if (res.data.data[0] === undefined) {
-        alert("This player is either injured or hasn't played yet this season");
-      } else {
-        setValue({ playerName: value.playerName, playerInfo: playerInfo, playerStats: res.data.data[0] });
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+  const getAge = (dateOfBirth) => {
+    var today = new Date();
+    var birthDate = new Date(dateOfBirth);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;  
   }
 
   const handleBlur = (e) => {
@@ -96,7 +88,8 @@ export default function App() {
     } else if (e.keyCode === 13) {
       let name = suggestions[cursor] ? (suggestions[cursor].firstName + " " + suggestions[cursor].lastName) : "";
       if (name.length) {
-        setValue({playerName: name });
+        setValue({playerName: name, playerInfo: suggestions[cursor]});
+        getTeamInfo(suggestions[cursor])
         setSuggestions([]);
       }
     }
@@ -123,14 +116,14 @@ export default function App() {
           <div key={i}
               id={i} 
               className={"suggestion col-md-12 justify-content-md-center " + (cursor === i ? "highlight" : null)}
-              onMouseDown={() => onSuggestHandler(suggestion.firstName + ' ' + suggestion.lastName)}
+              onMouseDown={() => onSuggestHandler(suggestion, i)}
           >{suggestion.firstName} {suggestion.lastName}</div>
         )}
       </form>
       
       <br></br>
       
-      {submit && value.playerInfo && value.playerStats && (
+      {submit && value.playerInfo && value.teamInfo && (
         <div>
 
           <table>
@@ -142,6 +135,8 @@ export default function App() {
               <th className="cellHeader">DIV</th>
               <th className="cellHeader">POS</th>
               <th className="cellHeader">HT</th>
+              <th className="cellHeader">AGE</th>
+              <th className="cellHeader">#</th>
             </tr>
             </tbody>
             <tbody>
@@ -150,64 +145,25 @@ export default function App() {
                 {value.playerName}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["team"]["abbreviation"]}
+                {value.teamInfo["tricode"]}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["team"]["conference"]}
+                {value.teamInfo["confName"]}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["team"]["division"]}
+                {value.teamInfo["divName"]}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["position"]}
+                {value.playerInfo["pos"]}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerInfo["height_feet"] ? (value.playerInfo["height_feet"] + "'" + value.playerInfo["height_inches"] + '"') : "N/A"}
-              </td>
-            </tr>
-            </tbody>
-          </table>
-
-          <br></br>
-
-          <table>
-            <tbody>
-            <tr>
-              <th className="cellHeader">GP</th>
-              <th className="cellHeader">PPG</th>
-              <th className="cellHeader">RPG</th>
-              <th className="cellHeader">APG</th>
-              <th className="cellHeader">SPG</th>
-              <th className="cellHeader">BPG</th>
-              <th className="cellHeader">FG%</th>
-              <th className="cellHeader">3P%</th>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td className="cellSingle cellSmall">
-                {value.playerStats["games_played"]}
+                {value.playerInfo["heightFeet"] ? (value.playerInfo["heightFeet"] + "'" + value.playerInfo["heightInches"] + '"') : "N/A"}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerStats["pts"]}
+                {getAge(value.playerInfo["dateOfBirthUTC"])}
               </td>
               <td className="cellSingle cellSmall">
-                {value.playerStats["reb"]}
-              </td>
-              <td className="cellSingle cellSmall">
-                {value.playerStats["ast"]}
-              </td>
-              <td className="cellSingle cellSmall">
-                {value.playerStats["stl"]}
-              </td>
-              <td className="cellSingle cellSmall">
-                {value.playerStats["blk"]}         
-              </td>
-              <td className="cellSingle cellSmall">
-                {value.playerStats["fg_pct"] }
-              </td>
-              <td className="cellSingle cellSmall">
-                {value.playerStats["fg3_pct"]}
+                {value.playerInfo["jersey"]}
               </td>
             </tr>
             </tbody>
