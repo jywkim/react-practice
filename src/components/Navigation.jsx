@@ -53,13 +53,13 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/nba1">
-                  NBA 1
+                <NavLink className="nav-link" to="/nba">
+                  NBA
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/nba2">
-                  NBA 2
+                <NavLink className="nav-link" to="/music">
+                  Music
                 </NavLink>
               </li>
               <li className="nav-item">
