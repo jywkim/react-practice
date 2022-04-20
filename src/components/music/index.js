@@ -10,6 +10,8 @@ export default function App() {
   const BACKEND_URL = "http://localhost:8000/music";
 
   const [token, setToken] = useState("");
+  const [searchKey, setSearchKey] = useState("");
+  const [artists, setArtists] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -20,8 +22,9 @@ export default function App() {
       
       window.location.hash = "";
       window.localStorage.setItem("token", token);
-      setToken(token);
     }
+
+    setToken(token);
 
     const getClientId = async () => {
       const response = await axios.get(BACKEND_URL);
@@ -29,6 +32,35 @@ export default function App() {
     }
     getClientId();
   }, []);
+
+  const logout = () => {
+    setToken("");
+    setArtists([]);
+    window.localStorage.removeItem("token");
+  }
+
+  const searchArtists = async (e) => {
+    e.preventDefault();
+    const {data} = await axios.get("https://api.spotify.com/v1/search", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      params: {
+        q: searchKey,
+        type: "artist"
+      }
+    })
+    setArtists(data.artists.items);
+  }
+
+  const renderArtists = () => {
+    return artists.map(artist => (
+      <div key={artist.id}>
+        {artist.images.length ? <img width={"100%"} src={artist.images[0].url} alt=""/> : <div>No Image</div>}
+        {artist.name}
+      </div>
+    ))
+  }
 
   return (
     <div className="container">
@@ -39,7 +71,18 @@ export default function App() {
           <a href={`${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>
             Login to Spotify
           </a>
-          : <button>Logout</button>}
+          : <button onClick={logout}>Logout</button>}
+
+        {token ?
+          <form onSubmit={searchArtists}>
+            <input type="text" onChange={e => setSearchKey(e.target.value)}/>
+            <button type={"submit"}>Search</button>
+          </form>  
+          : <h2>Please login</h2>
+        }
+        
+        {artists ? renderArtists() : ""}
+
         </header>
       </div>
     </div>
