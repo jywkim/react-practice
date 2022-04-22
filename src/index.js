@@ -17,6 +17,7 @@ import {
   NBA,
   Rent,
   Music,
+  Todo,
   Blog,
   Posts,
   Post,
@@ -37,6 +38,7 @@ ReactDOM.render(
       <Route path="/nba" element={<NBA />} />
       <Route path="/rent" element={<Rent />} />
       <Route path="/music" element={<Music />} />
+      <Route path="/todo" element={<Todo />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />
