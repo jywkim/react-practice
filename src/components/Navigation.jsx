@@ -23,13 +23,8 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/tictactoe1P">
-                  Tic-Tac-Toe 1P
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/tictactoe2P">
-                  Tic-Tac-Toe 2P
+                <NavLink className="nav-link" to="/tictactoe">
+                  Tic-Tac-Toe
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -70,6 +65,11 @@ function Navigation() {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/todo">
                   To Do
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/paypal">
+                  PayPal
                 </NavLink>
               </li>
               <li className="nav-item">

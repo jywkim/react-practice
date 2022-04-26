@@ -1,13 +1,13 @@
 import React from "react";
 import Game from './index';
 
-function Tictactoe2P() {
+function Tictactoe() {
   return (
-    <div className="tictactoe2P">
+    <div className="tictactoe">
       <div className="container">
         <div className="row align-items-center my-5">
           <div className="col-lg-5">
-            <h1 className="font-weight-light">Tic-Tac-Toe 2P</h1>
+            <h1 className="font-weight-light">Tic-Tac-Toe</h1>
             < Game />
           </div>
         </div>
@@ -16,4 +16,4 @@ function Tictactoe2P() {
   );
 }
 
-export default Tictactoe2P;
+export default Tictactoe;
