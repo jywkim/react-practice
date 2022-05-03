@@ -14,7 +14,6 @@ import {
   Restaurant,
   Marsrover,
   NBA,
-  Rent,
   Music,
   Todo,
   Paypal,
@@ -35,7 +34,6 @@ ReactDOM.render(
       <Route path="/restaurant" element={<Restaurant />} />
       <Route path="/marsrover" element={<Marsrover />} />
       <Route path="/nba" element={<NBA />} />
-      <Route path="/rent" element={<Rent />} />
       <Route path="/music" element={<Music />} />
       <Route path="/todo" element={<Todo />} />
       <Route path="/paypal" element={<Paypal />} />
