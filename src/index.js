@@ -17,6 +17,7 @@ import {
   Music,
   Todo,
   Paypal,
+  Paypalcheckout,
   Blog,
   Posts,
   Post,
@@ -37,6 +38,7 @@ ReactDOM.render(
       <Route path="/music" element={<Music />} />
       <Route path="/todo" element={<Todo />} />
       <Route path="/paypal" element={<Paypal />} />
+      <Route path="/paypalcheckout" element={<Paypalcheckout />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />

@@ -68,6 +68,11 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
+                <NavLink className="nav-link" to="/paypalcheckout">
+                  PayPal Checkout
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink className="nav-link" to="/blog">
                   Blog
                 </NavLink>
