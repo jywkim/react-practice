@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom"
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 export default function Payment() {
-    const BACKEND_URL = "http://localhost:8000/create-order";
+    const urlCreateOrder = "http://localhost:8000/create-order";
+    const urlGetItems = "http://localhost:8000/get-items";
+
+    useEffect(() => {
+      fetch(urlGetItems)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
+    }, []);
 
     const createOrder = () => {
-      return fetch(BACKEND_URL, {
+      return fetch(urlCreateOrder, {
         method: "POST",
         headers: {
           "Content-Type" : "application/json"

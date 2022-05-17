@@ -34,6 +34,11 @@ const storeItems = new Map([
 //     res.render('index', {paypalClientId: process.env.REACT_APP_PAYPAL_CLIENT_ID})
 // })
 
+app.get("/get-items", (req, res) => {
+    let array = Array.from(storeItems, ([id, details]) => ({ id, details }));
+    res.send({message: "Backend: Get Items", data: array});
+  })
+
 app.post('/create-order', async (req, res) => {
     const request = new paypal.orders.OrdersCreateRequest();
     const total = req.body.items.reduce((sum, item) => {
