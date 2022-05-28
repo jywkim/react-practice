@@ -23,6 +23,9 @@ const paypalClient = new paypal.core.PayPalHttpClient(
 const storeItems = new Map([
     [1, {price: 10, name: "Item A"}],
     [2, {price: 20, name: "Item B"}],
+    [3, {price: 30, name: "Item C"}],
+    [4, {price: 40, name: "Item D"}],
+    [5, {price: 50, name: "Item E"}],
 ])
 
 // app.get('/music', (req, res) => {

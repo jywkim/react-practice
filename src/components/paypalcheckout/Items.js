@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function Items() {
     const urlGetItems = "http://localhost:8000/get-items";
     const [items, setItems] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
       fetch(urlGetItems)
@@ -17,9 +18,20 @@ export default function Items() {
         )
     }, []);
 
-    const handleChange = (e, key) => {
-      console.log(e);
-      console.log(key);
+    useEffect(() => {
+     console.log(selectedRows);
+    }, [selectedRows]);
+
+    const handleChange = (e, item) => {
+      if (e.target.checked === true) {
+        setSelectedRows([
+           ...selectedRows,
+           item
+        ])
+      } else {
+        const nextSelectedRows = selectedRows.filter(selectedRow => selectedRow.id !== item.id);
+        setSelectedRows(nextSelectedRows);
+      }
     }
 
     return (
@@ -33,8 +45,8 @@ export default function Items() {
             </tr>
           </tbody>
           <tbody>
-            {items.map((item, key) =>(
-            <tr key={key} className="payRow">
+            {items.map((item) =>(
+            <tr key={item.id} className="payRow">
               <td className="payName">
                 {item.details.name}
               </td>
@@ -44,7 +56,7 @@ export default function Items() {
               <td className="payCheck">
                 <input 
                   type="checkbox" 
-                  onChange={(e) => handleChange(e, key)} 
+                  onChange={(e) => handleChange(e, item)} 
                 >
                 </input>
               </td>
