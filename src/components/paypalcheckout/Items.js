@@ -17,13 +17,14 @@ export default function Items() {
         )
     }, []);
 
-    const handleClick = (e) => {
+    const handleChange = (e, key) => {
       console.log(e);
+      console.log(key);
     }
 
     return (
       <div>
-        <table>
+        <table id="payTable">
           <tbody>
             <tr className="payRow">
               <th className="payName">Name</th>
@@ -41,7 +42,11 @@ export default function Items() {
                 {item.details.price}
               </td>
               <td className="payCheck">
-                <input type="checkbox" onClick={handleClick}></input>
+                <input 
+                  type="checkbox" 
+                  onChange={(e) => handleChange(e, key)} 
+                >
+                </input>
               </td>
             </tr>
             ))}
