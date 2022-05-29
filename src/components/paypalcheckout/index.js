@@ -5,19 +5,26 @@ import Items from "./Items";
 
 export default function App() {
   const [checkout, setCheckOut] = useState(false);
+  const [items, setItems] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   
+  const handleClick = (e) => {
+    setCheckOut(true);
+    console.log(selectedRows);
+  }
+
   return (
     <div className="AppX">
-      <Items />
-
+      <Items 
+        items={items}
+        setItems={setItems}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+      />
       {checkout ? (
         <Payment />
       ) : (
-        <button 
-          onClick={() => {
-          setCheckOut(true);
-        }}
-        >
+        <button onClick={handleClick}>
           Checkout
         </button>
       )}

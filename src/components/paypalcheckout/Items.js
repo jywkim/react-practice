@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-export default function Items() {
+export default function Items({items, setItems, selectedRows, setSelectedRows}) {
     const urlGetItems = "http://localhost:8000/get-items";
-    const [items, setItems] = useState([]);
-    const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
       fetch(urlGetItems)
@@ -16,11 +14,8 @@ export default function Items() {
             console.log(error);
           }
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-     console.log(selectedRows);
-    }, [selectedRows]);
 
     const handleChange = (e, item) => {
       if (e.target.checked === true) {
