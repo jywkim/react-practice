@@ -10,7 +10,6 @@ export default function App() {
   
   const handleClick = (e) => {
     setCheckOut(true);
-    console.log(selectedRows);
   }
 
   return (
@@ -22,7 +21,9 @@ export default function App() {
         setSelectedRows={setSelectedRows}
       />
       {checkout ? (
-        <Payment />
+        <Payment 
+          selectedRows={selectedRows}
+        />
       ) : (
         <button onClick={handleClick}>
           Checkout
