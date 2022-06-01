@@ -12,6 +12,7 @@ export { default as Music } from "./music/Music";
 export { default as Todo } from "./todo/Todo";
 export { default as Paypal } from "./paypal/Paypal";
 export { default as Paypalcheckout } from "./paypalcheckout/Paypalcheckout";
+export { default as Events } from "./events/Events";
 export { default as Blog } from "./blog/Blog";
 export { default as Posts } from "./blog/Posts";
 export { default as Post } from "./blog/Post";
