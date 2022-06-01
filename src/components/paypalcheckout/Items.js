@@ -8,7 +8,11 @@ export default function Items({items, setItems, selectedRows, setSelectedRows}) 
         .then(res => res.json())
         .then(
           (result) => {
-            setItems(result.data);
+            const itemsWithQuantity = result.data.map(r => {
+              r.quantity = 1;
+              return r
+            })
+            setItems(itemsWithQuantity);
           },
           (error) => {
             console.log(error);
@@ -17,7 +21,7 @@ export default function Items({items, setItems, selectedRows, setSelectedRows}) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleChange = (e, item) => {
+    const handleChangeCheckbox = (e, item) => {
       if (e.target.checked === true) {
         setSelectedRows([
            ...selectedRows,
@@ -29,6 +33,15 @@ export default function Items({items, setItems, selectedRows, setSelectedRows}) 
       }
     }
 
+    const handleChangeQuantity = (e, item) => {
+      e.preventDefault();
+      const itemsUpdate = selectedRows.map(r => {
+        if (r.id === item.id) r.quantity = e.target.value;
+        return r;
+      })
+      setSelectedRows(itemsUpdate);
+    }
+
     return (
       <div>
         <table id="payTable">
@@ -36,6 +49,7 @@ export default function Items({items, setItems, selectedRows, setSelectedRows}) 
             <tr className="payRow">
               <th className="payName">Name</th>
               <th className="payPrice">Price</th>
+              <th className="payCheck"></th>
               <th className="payCheck"></th>
             </tr>
           </tbody>
@@ -51,9 +65,18 @@ export default function Items({items, setItems, selectedRows, setSelectedRows}) 
               <td className="payCheck">
                 <input 
                   type="checkbox" 
-                  onChange={(e) => handleChange(e, item)} 
+                  onChange={(e) => handleChangeCheckbox(e, item)} 
                 >
                 </input>
+              </td>
+              <td className="payQuantity">
+                <input 
+                  type="textbox" 
+                  value={item.quantity}
+                  onChange={(e) => handleChangeQuantity(e, item)} 
+                >
+                </input>
+
               </td>
             </tr>
             ))}

@@ -20,18 +20,13 @@ export default function Payment({selectedRows}) {
     }, []);
 
     const createOrder = () => {
-      const itemsWithQuantity = selectedRows.map(r => {
-        r.quantity = 1;
-        return r
-      })
-
       return fetch(urlCreateOrder, {
         method: "POST",
         headers: {
           "Content-Type" : "application/json"
         },
         body: JSON.stringify({
-          items: itemsWithQuantity
+          items: selectedRows
         }),
       }).then(res => {
         if (res.ok) return res.json();
