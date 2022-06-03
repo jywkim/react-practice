@@ -9,6 +9,15 @@ export default function App() {
   const urlEvents = "https://app.ticketmaster.com/discovery/v2/events.json?size=1&apikey=" + process.env.REACT_APP_TICKETMASTER_CONSUMER_KEY;
 
   useEffect(() => {
+    // const loadEvents = async () => {
+    //   return await fetch(urlEvents)
+    //   .then(res =>  res.json())
+    //   .then(data => {
+    //     const events = data._embedded.events;
+    //     if (events.length > 0) setEvents(events);
+    //   })
+    // };
+
     const loadEvents = async () => {
       const response = await axios.get(urlEvents);
       const events = response.data._embedded.events;
@@ -19,21 +28,26 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (events.length > 0) console.log(events);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events]);
+  const handleChange = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    searchEvents(e.target.artist.value);
     setSubmit(true);
     e.target.city.value = "";
     e.target.artist.value = "";
   };
 
-  const changeValue = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-  };
+  const searchEvents = async (keyword) => {
+    const response = await axios.get(urlEvents + "&keyword=" + keyword);
+    if (response.data.hasOwnProperty("_embedded")) {
+      const events = response.data._embedded.events;
+      if (events.length > 0)
+        setEvents(events);
+    }
+  }
 
   return (
     <div className="App">
@@ -45,7 +59,7 @@ export default function App() {
             name="city" 
             value={value.city}
             placeholder="Toronto" 
-            onChange={changeValue}/>
+            onChange={handleChange}/>
         </div>
         <div className="input-group">
           <label htmlFor="test">Artist</label>
@@ -54,13 +68,13 @@ export default function App() {
             name="artist" 
             value={value.artist}
             placeholder="Artist" 
-            onChange={changeValue}/>
+            onChange={handleChange}/>
         </div>
         <button className="primary">Enter</button>
       </form>
       {submit && (
         <p>
-          Success! {value.city} and {value.artist} entered!
+          Event: {events[0].name}
         </p>
       )}
     </div>
