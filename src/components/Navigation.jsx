@@ -53,11 +53,6 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/paypal">
-                  PayPal
-                </NavLink>
-              </li>
-              <li className="nav-item">
                 <NavLink className="nav-link" to="/paypalcheckout">
                   PayPal Checkout
                 </NavLink>
@@ -65,6 +60,11 @@ function Navigation() {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/events">
                   Events
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/reno">
+                  Reno
                 </NavLink>
               </li>
               <li className="nav-item">
