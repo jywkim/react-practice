@@ -18,8 +18,7 @@ export default function Items({items, setItems, selectedRows, setSelectedRows}) 
             console.log(error);
           }
         )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [setItems]);
 
     const handleChangeCheckbox = (e, item) => {
       if (e.target.checked === true) {

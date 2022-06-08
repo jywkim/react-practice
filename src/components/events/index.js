@@ -9,15 +9,6 @@ export default function App() {
   const urlEvents = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + process.env.REACT_APP_TICKETMASTER_CONSUMER_KEY;
 
   useEffect(() => {
-    // const loadEvents = async () => {
-    //   return await fetch(urlEvents)
-    //   .then(res =>  res.json())
-    //   .then(data => {
-    //     const events = data._embedded.events;
-    //     if (events.length > 0) setEvents(events);
-    //   })
-    // };
-
     const loadEvents = async () => {
       const response = await axios.get(urlEvents);
       const events = response.data._embedded.events;
@@ -25,8 +16,7 @@ export default function App() {
         setEvents(events);
     }
     loadEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [urlEvents]);
 
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
