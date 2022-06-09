@@ -38,8 +38,8 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/nba">
-                  NBA
+                <NavLink className="nav-link" to="/map">
+                  Map
                 </NavLink>
               </li>
               <li className="nav-item">

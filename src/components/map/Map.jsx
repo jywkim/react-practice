@@ -1,13 +1,13 @@
 import React from "react";
 import App from './index';
 
-function NBA() {
+function Map() {
   return (
-    <div className="nba">
+    <div className="map">
       <div className="container">
         <div className="row align-items-center my-6">
-          <div className="col-lg-6">
-            <h1 className="font-weight-light">NBA (NBA API)</h1>
+          <div className="col-lg-10">
+            <h1 className="font-weight-light">Map</h1>
             < App />
           </div>
         </div>
@@ -16,4 +16,4 @@ function NBA() {
   );
 }
 
-export default NBA;
+export default Map;

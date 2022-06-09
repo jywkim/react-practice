@@ -7,7 +7,7 @@ export { default as Excelexport } from "./excelexport/Excelexport";
 export { default as Counter } from "./counter/Counter";
 export { default as Restaurant } from "./restaurant/Restaurant";
 export { default as Marsrover } from "./marsrover/Marsrover";
-export { default as NBA } from "./nba/NBA";
+export { default as Map } from "./map/Map";
 export { default as Music } from "./music/Music";
 export { default as Todo } from "./todo/Todo";
 export { default as Paypalcheckout } from "./paypalcheckout/Paypalcheckout";

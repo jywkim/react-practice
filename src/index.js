@@ -13,7 +13,7 @@ import {
   Counter,
   Restaurant,
   Marsrover,
-  NBA,
+  Map,
   Music,
   Todo,
   Paypalcheckout,
@@ -35,7 +35,7 @@ ReactDOM.render(
       <Route path="/counter" element={<Counter />} />
       <Route path="/restaurant" element={<Restaurant />} />
       <Route path="/marsrover" element={<Marsrover />} />
-      <Route path="/nba" element={<NBA />} />
+      <Route path="/map" element={<Map />} />
       <Route path="/music" element={<Music />} />
       <Route path="/todo" element={<Todo />} />
       <Route path="/paypalcheckout" element={<Paypalcheckout />} />
