@@ -13,6 +13,7 @@ export { default as Todo } from "./todo/Todo";
 export { default as Paypalcheckout } from "./paypalcheckout/Paypalcheckout";
 export { default as Events } from "./events/Events";
 export { default as Reno } from "./reno/Reno";
+export { default as Analytics } from "./analytics/Analytics";
 export { default as Blog } from "./blog/Blog";
 export { default as Posts } from "./blog/Posts";
 export { default as Post } from "./blog/Post";

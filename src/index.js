@@ -19,6 +19,7 @@ import {
   Paypalcheckout,
   Events,
   Reno,
+  Analytics,
   Blog,
   Posts,
   Post,
@@ -41,6 +42,7 @@ ReactDOM.render(
       <Route path="/paypalcheckout" element={<Paypalcheckout />} />
       <Route path="/events" element={<Events />} />
       <Route path="/reno" element={<Reno />} />
+      <Route path="/analytics" element={<Analytics />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />

@@ -1,0 +1,17 @@
+.customerTable {
+  display: block;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.customerTable th, td {
+  padding: 0 15px;
+}
+
+#csvFileInput {
+  width: 75%;
+}
+
+.containerTables {
+  padding-bottom: 2in;
+}
