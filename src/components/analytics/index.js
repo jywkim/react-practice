@@ -56,26 +56,28 @@ export default function App() {
 
     let map = {};
     let postalCode = "";
-
     const promises = [];
     for (let i = 0; i < array.length; i++) {
       postalCode = array[i]["CELPostal Code"];
-
       if (!map[postalCode]) {
         map[postalCode] = true;
       }
+    }
 
-      if (postalCode in map) {
-        const promise = getSegmentCode(postalCode);
-        promises.push(promise);
-      }
+    for (const [key, value] of Object.entries(map)) {
+      const promise = getSegmentCode(key);
+      promises.push(promise);    
     }
 
     Promise.all(promises).then(res => {
+      let resPostCode = "";
       for (let i = 0; i < res.length; i++) {
-        array[i]["Segment_Code"] = assignSegmentCode(res[i].data);
+        resPostCode = res[i].config.url.split('=')[1];
+        map[resPostCode] = assignSegmentCode(res[i].data);
       }
-      
+      for (let i = 0; i < array.length; i++) {
+        array[i]["Segment_Code"] = map[array[i]["CELPostal Code"]];
+      }
       const targetGroup1 = array.filter(item => item.Segment_Code >= 1 && item.Segment_Code <= 30);
       const targetGroup2 = array.filter(item => item.Segment_Code >= 31 && item.Segment_Code <= 67);
       setArrayAll(array);
