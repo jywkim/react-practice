@@ -20,6 +20,7 @@ import {
   Events,
   Reno,
   NBA,
+  Shopping,
   Analytics,
   Blog,
   Posts,
@@ -44,6 +45,7 @@ ReactDOM.render(
       <Route path="/events" element={<Events />} />
       <Route path="/reno" element={<Reno />} />
       <Route path="/nba" element={<NBA />} />
+      <Route path="/shopping" element={<Shopping />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
