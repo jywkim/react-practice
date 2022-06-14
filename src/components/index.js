@@ -15,6 +15,7 @@ export { default as Events } from "./events/Events";
 export { default as Reno } from "./reno/Reno";
 export { default as NBA } from "./nba/NBA";
 export { default as Shopping } from "./shopping/Shopping";
+export { default as Promo } from "./promo/Promo";
 export { default as Analytics } from "./analytics/Analytics";
 export { default as Blog } from "./blog/Blog";
 export { default as Posts } from "./blog/Posts";

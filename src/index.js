@@ -21,6 +21,7 @@ import {
   Reno,
   NBA,
   Shopping,
+  Promo,
   Analytics,
   Blog,
   Posts,
@@ -46,6 +47,7 @@ ReactDOM.render(
       <Route path="/reno" element={<Reno />} />
       <Route path="/nba" element={<NBA />} />
       <Route path="/shopping" element={<Shopping />} />
+      <Route path="/promo" element={<Promo />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
