@@ -11,20 +11,38 @@ export default function App() {
     { id: uuid(), text: 'paddle' },
     { id: uuid(), text: 'boat' },
     { id: uuid(), text: 'lifejacket' },
-    { id: uuid(), text: 'boat' },
   ]);
 
   useEffect(() => {
     const secret = [['paddle', 'paddle'], ['boat', 'wildcard', 'boat']];
 
-    const checker = (arr, target) => target.every(v => arr.includes(v));
+    const arrArr = (haystack, needle) => {
+        let matchingArray = [];
+        for (let i = 0; i < haystack.length; i++) {
+          for (let j = 0; j < needle.length; j++) {
+            if (haystack[i] === needle[j]) {
+              matchingArray.push(haystack[i]);
+              break;
+            } else if (haystack[i] !== needle[j] && matchingArray.length && needle[j] === 'wildcard') {
+              matchingArray.push('wildcard');
+              break;
+            }
+          }
+        }
+        return matchingArray;
+    };
 
     const checkWinner = () => {
-      let result = items.map(i => i.text);
-      console.log(checker(result, secret[0]));
+      let itemsArray = items.map(i => i.text);
+      for (let i = 0; i < secret.length; i++) {
+        if (JSON.stringify(secret[i]) !== JSON.stringify(arrArr(itemsArray, secret[i]))) {
+          return false;
+        }
+      }
+      return true;
     }
 
-    checkWinner();
+    if (checkWinner()) alert("WINNER!");
   }, [items]);
 
   return (
