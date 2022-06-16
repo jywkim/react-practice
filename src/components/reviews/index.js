@@ -11,6 +11,7 @@ export default function App() {
     { id: uuid(), text: "Michael Bryant was a good host, but I expected more desserts for the price." },
     { id: uuid(), text: "I loved the desserts, thank you Michael." },
     { id: uuid(), text: "Very high at 20 dollars per dessert. I rather get from Cheap Desserts." },
+    { id: uuid(), text: "This place was absolutely awful! Poor service!" },
   ]);
 
   const topics = useMemo(() => {
@@ -18,15 +19,16 @@ export default function App() {
       "Business specialties" : ["dessert", "desserts"],
       "Price" : ["low", "high", "price"],
       "Michael Bryant" : ["michael bryant"],
+      "Negative" : ["bad", "poor", "awful"],
     };
   }, []);
 
   useEffect(() => {
     const checkTopicOccurrences = () => {
       const arrayReviews = reviews.map(i => i.text);
-      let mapOccurences = {};
-      let topicKeys = Object.keys(topics);
-      let topicValues = Object.values(topics);
+      const mapOccurences = {};
+      const topicKeys = Object.keys(topics);
+      const topicValues = Object.values(topics);
       for (let i = 0; i < arrayReviews.length; i++) {
         let review = arrayReviews[i].toLowerCase();
         for (let j = 0; j < topicValues.length; j++) {
@@ -38,7 +40,7 @@ export default function App() {
           }
         }
       }
-      var arrayOccurences = Object.keys(mapOccurences).map((key) => [key, mapOccurences[key]]);
+      const arrayOccurences = Object.keys(mapOccurences).map((key) => [key, mapOccurences[key]]);
       setTopicOccurrences(arrayOccurences);
     }
 
@@ -63,7 +65,7 @@ export default function App() {
 
   return (
     <div>
-      Topic Occurrences:
+      Topic Occurrences in Reviews:
       <ul>
         {topicOccurrences.map((topic, key) =>(
           <li key={key}>{topic[0]}: {topic[1]}</li>
