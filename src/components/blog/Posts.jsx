@@ -38,6 +38,17 @@ function Posts() {
           </div>
         </Link>
 
+        <Link to="/reviews">
+          <div className="row align-items-center my-5">
+            <div className="col-lg-5">
+              <h1 className="font-weight-light">Reviews</h1>
+              <p>
+              Reviews
+            </p>
+            </div>
+          </div>
+        </Link>
+
         <Link to="/shopping">
           <div className="row align-items-center my-5">
             <div className="col-lg-5">

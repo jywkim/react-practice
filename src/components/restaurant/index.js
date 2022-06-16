@@ -48,31 +48,6 @@ export default function App() {
     checkUniqueMeals();
   }, [meals, menu]);
 
-  //Topic Occurences in Reviews
-  // let topics = {};
-  // topics["Business specialties"] = ["dessert", "desserts"];
-  // topics["Price"] = ["low", "high", "price"];
-  // topics["Michael Bryant"] = ["michael bryant"];
-  // let reviews = [];
-  // reviews.push("Michael Bryant was a good host, but I expected more desserts for the price.");
-  // reviews.push("I loved the desserts, thank you Michael.");
-  // reviews.push("Very high at 20 dollars per dessert. I rather get from Cheap Desserts.");
-
-  // let mapOccurences = {};
-  // let topicKeys = Object.keys(topics);
-  // let topicValues = Object.values(topics);
-  // for (let i = 0; i < reviews.length; i++) {
-  //   let review = reviews[i].toLowerCase();
-  //   for (let j = 0; j < topicValues.length; j++) {
-  //     if (topicValues[j].some(t => review.includes(t))) {
-  //       if (!mapOccurences[topicKeys[j]]) {
-  //         mapOccurences[topicKeys[j]] = 0;
-  //       }
-  //       mapOccurences[topicKeys[j]]++;
-  //     }
-  //   }
-  // }
-
   const handleClick = (e) => {
     const text = prompt('Enter a meal');
     if (text) {
@@ -85,6 +60,12 @@ export default function App() {
         alert("Please choose an item from the menu");
       }
     }
+  }
+
+  const handleRemove = (id) => {
+    setMeals(meals =>
+      meals.filter(meal => meal.id !== id)
+    )
   }
 
   return (
@@ -104,11 +85,7 @@ export default function App() {
                     className="remove-btn"
                     variant="danger"
                     size="sm"
-                    onClick={() =>
-                      setMeals(meals =>
-                        meals.filter(meal => meal.id !== id)
-                      )
-                    }
+                    onClick={() => {handleRemove(id)}}
                   >
                     &times;
                   </Button>
@@ -119,9 +96,7 @@ export default function App() {
           </TransitionGroup>
         </ListGroup>
         <Button
-          onClick={(e) => {
-            handleClick(e);
-          }}
+          onClick={(e) => {handleClick(e)}}
         >
           Add Meal
         </Button>

@@ -12,6 +12,7 @@ import {
   Excelexport,
   Counter,
   Restaurant,
+  Reviews,
   Marsrover,
   Map,
   Music,
@@ -38,6 +39,7 @@ ReactDOM.render(
       <Route path="/excelexport" element={<Excelexport />} />
       <Route path="/counter" element={<Counter />} />
       <Route path="/restaurant" element={<Restaurant />} />
+      <Route path="/reviews" element={<Reviews />} />
       <Route path="/marsrover" element={<Marsrover />} />
       <Route path="/map" element={<Map />} />
       <Route path="/music" element={<Music />} />
