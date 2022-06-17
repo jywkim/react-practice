@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, ListGroup, Button } from 'react-bootstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {v1 as uuid} from "uuid"; 
 import "./index.css";
+import {List} from '../list/List';
 
 export default function App() {
   const [uniqueMeals, setUniqueMeals] = useState(0);
@@ -48,59 +47,16 @@ export default function App() {
     checkUniqueMeals();
   }, [meals, menu]);
 
-  const handleClick = (e) => {
-    const text = prompt('Enter a meal');
-    if (text) {
-      if (menu[text]) {
-        setMeals(meals => [
-          ...meals,
-          { id: uuid(), text },
-        ]);
-      } else {
-        alert("Please choose an item from the menu");
-      }
-    }
-  }
-
-  const handleRemove = (id) => {
-    setMeals(meals =>
-      meals.filter(meal => meal.id !== id)
-    )
-  }
-
   return (
     <div>
       <p>Unique Meals: {uniqueMeals}</p>
-      <Container style={{ marginTop: '2rem' }}>
-        <ListGroup style={{ marginBottom: '1rem' }}>
-          <TransitionGroup className="todo-list">
-            {meals.map(({ id, text }) => (
-              <CSSTransition
-                key={id}
-                timeout={500}
-                classNames="item"
-              >
-                <ListGroup.Item>
-                  <Button
-                    className="remove-btn"
-                    variant="danger"
-                    size="sm"
-                    onClick={() => {handleRemove(id)}}
-                  >
-                    &times;
-                  </Button>
-                  {text}
-                </ListGroup.Item>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ListGroup>
-        <Button
-          onClick={(e) => {handleClick(e)}}
-        >
-          Add Meal
-        </Button>
-      </Container>
+      <List 
+        className="list" 
+        items={meals}
+        setItems={setMeals}
+        itemType={'meal'}
+        data={menu}
+      />
     </div>
   );
 }

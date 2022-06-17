@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, ListGroup, Button } from 'react-bootstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {v1 as uuid} from "uuid"; 
 import "./index.css";
+import {List} from '../list/List';
 
 export default function App() {
   const [topicOccurrences, setTopicOccurrences] = useState([]);
@@ -47,22 +46,6 @@ export default function App() {
     checkTopicOccurrences();
   }, [reviews, topics]);
 
-  const handleClick = (e) => {
-    const text = prompt('Enter a review');
-    if (text) {
-      setReviews(reviews => [
-        ...reviews,
-        { id: uuid(), text },
-      ]);
-    }
-  }
-
-  const handleRemove = (id) => {
-    setReviews(reviews =>
-      reviews.filter(review => review.id !== id)
-    )
-  }
-
   return (
     <div>
       Topic Occurrences in Reviews:
@@ -71,36 +54,12 @@ export default function App() {
           <li key={key}>{topic[0]}: {topic[1]}</li>
         ))}
       </ul>
-      <Container style={{ marginTop: '2rem' }}>
-        <ListGroup style={{ marginBottom: '1rem' }}>
-          <TransitionGroup className="todo-list">
-            {reviews.map(({ id, text }) => (
-              <CSSTransition
-                key={id}
-                timeout={500}
-                classNames="item"
-              >
-                <ListGroup.Item>
-                  <Button
-                    className="remove-btn"
-                    variant="danger"
-                    size="sm"
-                    onClick={() => {handleRemove(id)}}
-                  >
-                    &times;
-                  </Button>
-                  {text}
-                </ListGroup.Item>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ListGroup>
-        <Button
-          onClick={(e) => {handleClick(e)}}
-        >
-          Add Review
-        </Button>
-      </Container>
+      <List 
+        className="list" 
+        items={reviews}
+        setItems={setReviews}
+        itemType={'review'}
+      />
     </div>
   );
 }
