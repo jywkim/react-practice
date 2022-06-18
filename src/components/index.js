@@ -9,6 +9,7 @@ export { default as Restaurant } from "./restaurant/Restaurant";
 export { default as Reviews } from "./reviews/Reviews";
 export { default as Marsrover } from "./marsrover/Marsrover";
 export { default as Map } from "./map/Map";
+export { default as Commute } from "./commute/Commute";
 export { default as Music } from "./music/Music";
 export { default as Todo } from "./todo/Todo";
 export { default as Paypalcheckout } from "./paypalcheckout/Paypalcheckout";

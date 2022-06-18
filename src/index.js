@@ -15,6 +15,7 @@ import {
   Reviews,
   Marsrover,
   Map,
+  Commute,
   Music,
   Todo,
   Paypalcheckout,
@@ -42,6 +43,7 @@ ReactDOM.render(
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/marsrover" element={<Marsrover />} />
       <Route path="/map" element={<Map />} />
+      <Route path="/commute" element={<Commute />} />
       <Route path="/music" element={<Music />} />
       <Route path="/todo" element={<Todo />} />
       <Route path="/paypalcheckout" element={<Paypalcheckout />} />
