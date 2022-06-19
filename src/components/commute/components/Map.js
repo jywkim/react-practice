@@ -7,6 +7,7 @@ import {
   MarkerClusterer,
 } from "@react-google-maps/api";
 import Places from "./Places";
+import Distance from "./Distance";
 
 export default function Map() {
   const [office, setOffice] = useState();
@@ -49,10 +50,14 @@ export default function Map() {
     <div className="containerCommute">
         <div className="controls">
             <h1>Commute</h1>
-            <Places setOffice={(position) => {
-              setOffice(position);
-              mapRef.current?.panTo(position);
-            }} />
+            <Places 
+              setOffice={(position) => {
+                setOffice(position);
+                mapRef.current?.panTo(position);
+              }} 
+            />
+            {!office && <p>Enter the address of your office.</p>}
+            {directions && <Distance leg={directions.routes[0].legs[0]}/>}
         </div>
         <div className="mapCommute">
           <GoogleMap 
