@@ -11,6 +11,7 @@ import {
   Tictactoe,
   Excelexport,
   Counter,
+  Data,
   Restaurant,
   Reviews,
   Marsrover,
@@ -39,6 +40,7 @@ ReactDOM.render(
       <Route path="/tictactoe" element={<Tictactoe />} />
       <Route path="/excelexport" element={<Excelexport />} />
       <Route path="/counter" element={<Counter />} />
+      <Route path="/data" element={<Data />} />
       <Route path="/restaurant" element={<Restaurant />} />
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/marsrover" element={<Marsrover />} />

@@ -5,6 +5,7 @@ export { default as Login } from "./login/Login";
 export { default as Tictactoe } from "./tictactoe/Tictactoe";
 export { default as Excelexport } from "./excelexport/Excelexport";
 export { default as Counter } from "./counter/Counter";
+export { default as Data } from "./data/Data";
 export { default as Restaurant } from "./restaurant/Restaurant";
 export { default as Reviews } from "./reviews/Reviews";
 export { default as Marsrover } from "./marsrover/Marsrover";
