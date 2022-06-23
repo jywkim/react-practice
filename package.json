@@ -19,6 +19,7 @@
     "express": "^4.17.3",
     "file-saver": "^2.0.5",
     "mocha": "^10.0.0",
+    "msw": "^0.42.3",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
@@ -29,6 +30,7 @@
     "use-places-autocomplete": "^3.0.0",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4",
+    "whatwg-fetch": "^3.6.2",
     "xlsx": "^0.18.2"
   },
   "scripts": {

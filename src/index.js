@@ -26,6 +26,7 @@ import {
   Shopping,
   Promo,
   Analytics,
+  Currency,
   Blog,
   Posts,
   Post,
@@ -55,6 +56,7 @@ ReactDOM.render(
       <Route path="/shopping" element={<Shopping />} />
       <Route path="/promo" element={<Promo />} />
       <Route path="/analytics" element={<Analytics />} />
+      <Route path="/currency" element={<Currency />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />
