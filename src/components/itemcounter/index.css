@@ -1,0 +1,13 @@
+.itemName {
+    width: 2in;
+    user-select: none;
+}
+
+.itemName:hover {
+    background-color: yellow;
+    cursor: pointer;
+}
+
+.itemName:active {
+    background-color: green;
+}
