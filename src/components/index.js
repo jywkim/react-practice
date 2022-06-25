@@ -22,6 +22,7 @@ export { default as Shopping } from "./shopping/Shopping";
 export { default as Promo } from "./promo/Promo";
 export { default as Analytics } from "./analytics/Analytics";
 export { default as Currency } from "./currency/Currency";
+export { default as Model } from "./model/Model";
 export { default as Blog } from "./blog/Blog";
 export { default as Posts } from "./blog/Posts";
 export { default as Post } from "./blog/Post";

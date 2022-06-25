@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -28,12 +28,16 @@ import {
   Promo,
   Analytics,
   Currency,
+  Model,
   Blog,
   Posts,
   Post,
 } from "./components";
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <Router>
     <Navigation />
     <Routes>
@@ -59,15 +63,14 @@ ReactDOM.render(
       <Route path="/promo" element={<Promo />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/currency" element={<Currency />} />
+      <Route path="/model" element={<Model />} />
       <Route path="/blog" element={<Blog />}>
         <Route path="" element={<Posts />} />
         <Route path=":postSlug" element={<Post />} />
       </Route>
     </Routes>
     <Footer />
-  </Router>,
-
-  document.getElementById("root")
+  </Router>
 );
 
 serviceWorker.unregister();

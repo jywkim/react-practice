@@ -33,11 +33,6 @@ function Navigation() {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/counter">
-                  Counter
-                </NavLink>
-              </li>
-              <li className="nav-item">
                 <NavLink className="nav-link" to="/commute">
                   Commute
                 </NavLink>
@@ -45,11 +40,6 @@ function Navigation() {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/music">
                   Music
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/todo">
-                  To Do
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -70,6 +60,11 @@ function Navigation() {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/analytics">
                   Analytics
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/model">
+                  3D Model
                 </NavLink>
               </li>
               <li className="nav-item">

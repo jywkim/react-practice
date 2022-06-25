@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import { mount, shallow } from "enzyme";
 import axios from "axios";
@@ -27,3 +28,4 @@ describe("App test", () => {
     await expect(axios.get).toHaveBeenCalledTimes(1);
   });
 });
+*/
