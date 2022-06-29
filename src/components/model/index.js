@@ -1,8 +1,11 @@
 import React, { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import Model from './components/Dancing'; 
 import Avatar from './components/Avatar'; 
+import Silly from './components/Silly'; 
+import Jump from './components/Jump'; 
+import Bboy from './components/Bboy'; 
+import Robot from './components/Robot'; 
 import "./index.css";
 
 export default function App() {
@@ -10,12 +13,18 @@ export default function App() {
 
    var models = {
       None: <Avatar position={position}/>,
-      Silly: <Model position={position}/>
+      Silly: <Silly position={position}/>,
+      Jump: <Jump position={position}/>,
+      Bboy: <Bboy position={position}/>,
+      Robot: <Robot position={position}/>,
     }
 
    const options = [
       { label: 'None', value: 'None' },
       { label: 'Silly', value: 'Silly' },
+      { label: 'Jump', value: 'Jump' },
+      { label: 'Bboy', value: 'Bboy' },
+      { label: 'Robot', value: 'Robot' },
    ];
 
    const [value, setValue] = useState('None');
