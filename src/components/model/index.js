@@ -20,7 +20,7 @@ const Dropdown = ({ label, value, options, onChange }) => {
        {label}
        <select value={value} onChange={onChange}>
          {options.map((option, key) => (
-           <option value={option.value} key={key}>{option.label}</option>
+           <option value={option} key={key}>{option}</option>
          ))}
        </select>
      </label>
@@ -58,19 +58,7 @@ export default function App() {
       Twist: <Twist position={position}/>,
     };
 
-   const options = [
-      { label: 'None', value: 'None' },
-      { label: 'Bboy', value: 'Bboy' },
-      { label: 'Flair', value: 'Flair' },
-      { label: 'House', value: 'House' },
-      { label: 'Jump', value: 'Jump' },
-      { label: 'Robot', value: 'Robot' },
-      { label: 'Rumba', value: 'Rumba' },
-      { label: 'Silly', value: 'Silly' },
-      { label: 'Swing', value: 'Swing' },
-      { label: 'Twerk', value: 'Twerk' },
-      { label: 'Twist', value: 'Twist' },
-   ];
+   const options = Object.keys(models).map((key) => key);
 
    const [value, setValue] = useState('None');
 
