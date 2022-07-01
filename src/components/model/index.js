@@ -2,10 +2,16 @@ import React, { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Html, useProgress } from '@react-three/drei';
 import Avatar from './components/Avatar'; 
-import Silly from './components/Silly'; 
-import Jump from './components/Jump'; 
 import Bboy from './components/Bboy'; 
+import Flair from './components/Flair';
+import House from './components/House';
+import Jump from './components/Jump'; 
+import Silly from './components/Silly'; 
+import Swing from './components/Swing';
 import Robot from './components/Robot'; 
+import Rumba from './components/Rumba'; 
+import Twerk from './components/Twerk';
+import Twist from './components/Twist'; 
 import "./index.css";
 
 const Dropdown = ({ label, value, options, onChange }) => {
@@ -40,18 +46,30 @@ export default function App() {
 
    const models = {
       None: <Avatar position={position}/>,
-      Silly: <Silly position={position}/>,
-      Jump: <Jump position={position}/>,
       Bboy: <Bboy position={position}/>,
+      Flair: <Flair position={position}/>,
+      House: <House position={position}/>,
+      Jump: <Jump position={position}/>,
       Robot: <Robot position={position}/>,
+      Rumba: <Rumba position={position}/>,
+      Silly: <Silly position={position}/>,
+      Swing: <Swing position={position}/>,
+      Twerk: <Twerk position={position}/>,
+      Twist: <Twist position={position}/>,
     };
 
    const options = [
       { label: 'None', value: 'None' },
-      { label: 'Silly', value: 'Silly' },
-      { label: 'Jump', value: 'Jump' },
       { label: 'Bboy', value: 'Bboy' },
+      { label: 'Flair', value: 'Flair' },
+      { label: 'House', value: 'House' },
+      { label: 'Jump', value: 'Jump' },
       { label: 'Robot', value: 'Robot' },
+      { label: 'Rumba', value: 'Rumba' },
+      { label: 'Silly', value: 'Silly' },
+      { label: 'Swing', value: 'Swing' },
+      { label: 'Twerk', value: 'Twerk' },
+      { label: 'Twist', value: 'Twist' },
    ];
 
    const [value, setValue] = useState('None');
