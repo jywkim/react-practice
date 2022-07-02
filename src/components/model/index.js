@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Html, useProgress } from '@react-three/drei';
+import { OrbitControls, Html, useProgress, useCursor } from '@react-three/drei';
 import Avatar from './components/Avatar'; 
 import Bboy from './components/Bboy'; 
 import Flair from './components/Flair';
@@ -42,25 +42,31 @@ const Loader = () => {
 };
 
 export default function App() {
-   const position = [0.025, -0.9, 0];
+   const [value, setValue] = useState('None');
+   const [hovered, setHovered] = useState(false);
+   useCursor(hovered);
+
+   const attributes = {
+      position:  [0.025, -0.9, 0], 
+      onPointerOver: () => setHovered(true),
+      onPointerOut: () => setHovered(false)
+    };
 
    const models = {
-      None: <Avatar position={position}/>,
-      Bboy: <Bboy position={position}/>,
-      Flair: <Flair position={position}/>,
-      House: <House position={position}/>,
-      Jump: <Jump position={position}/>,
-      Robot: <Robot position={position}/>,
-      Rumba: <Rumba position={position}/>,
-      Silly: <Silly position={position}/>,
-      Swing: <Swing position={position}/>,
-      Twerk: <Twerk position={position}/>,
-      Twist: <Twist position={position}/>,
+      None: <Avatar {...attributes}/>,
+      Bboy: <Bboy {...attributes}/>,
+      Flair: <Flair {...attributes}/>,
+      House: <House {...attributes}/>,
+      Jump: <Jump {...attributes}/>,
+      Robot: <Robot {...attributes}/>,
+      Rumba: <Rumba {...attributes}/>,
+      Silly: <Silly {...attributes}/>,
+      Swing: <Swing {...attributes}/>,
+      Twerk: <Twerk {...attributes}/>,
+      Twist: <Twist {...attributes}/>,
     };
 
    const options = Object.keys(models).map((key) => key);
-
-   const [value, setValue] = useState('None');
 
    const handleChange = (event) => {
       setValue(event.target.value);
