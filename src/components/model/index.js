@@ -1,6 +1,7 @@
 import React, { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Html, useProgress, useCursor } from '@react-three/drei';
+import { useSpring, config } from '@react-spring/three';
 import Avatar from './components/Avatar'; 
 import Bboy from './components/Bboy'; 
 import Flair from './components/Flair';
@@ -42,14 +43,21 @@ const Loader = () => {
 };
 
 export default function App() {
-   const [value, setValue] = useState('None');
+   const [active, setActive] = useState(false);
    const [hovered, setHovered] = useState(false);
+   const [value, setValue] = useState('None');
    useCursor(hovered);
+   const spring = useSpring({
+      scale: active ? 1.25 : 1,
+      config: config.wobbly,
+    });
 
    const attributes = {
       position:  [0.025, -0.9, 0], 
+      scale: spring.scale,
+      onClick: () => setActive(!active),
       onPointerOver: () => setHovered(true),
-      onPointerOut: () => setHovered(false)
+      onPointerOut: () => setHovered(false),
     };
 
    const models = {
